@@ -84,6 +84,7 @@ window.onload = function () {
         intervalId = setInterval(decrement, 1000);
         //displays question
 
+        displayChoices();
         //60 second timer
         //starts when the start button is pushed, or user answers a new question
         //loop to randomly go through the array, and choose that object.
@@ -147,10 +148,6 @@ window.onload = function () {
     }
 
 
-    
-
-
-
 };
 
 //append this for each answer
@@ -159,28 +156,33 @@ window.onload = function () {
 //store answers in a variable with a random number
 //assign answer to div with that random number
 
-// function displayChoices() { // will be called when the question is started
+function displayChoices() { // will be called when the question is started
 
-//     //assign correct answer to a random number between 1-4
-//     var correctHolder = Math.floor(Math.random() * 4);
-//     return correctHolder;
-
-//     //assign incorrect answers to remaining numbers that aren't the correct answer
-//     for (var i = 0; i < trivia[questionNumber].incorrect.length; i++) {
-//         var answerNumber = Math.floor(Math.random() * 4);
-//         return trivia[questionNumber].incorrect[i];
-
-//         if (answerNumber === 1) {
+    console.log("display choices called");
+    $("#choice1").text(trivia[questionNumber].correct);
+    $("#choice2").text(trivia[questionNumber].incorrect[0]);
+    $("#choice3").text(trivia[questionNumber].incorrect[1]);
+    $("#choice4").text(trivia[questionNumber].incorrect[2]);
 
 
 
-//         }
-//         if (answerNumber === 2) { }
-//         if (answerNumber === 3) { }
+    //assign correct answer to a random number between 1-4
+    // var correctHolder = Math.floor(Math.random() * 4);
+    // return correctHolder;
+
+    // //assign incorrect answers to remaining numbers that aren't the correct answer
+    // for (var i = 0; i < trivia[questionNumber].incorrect.length; i++) {
+    //     var answerNumber = Math.floor(Math.random() * 4);
+    //     return trivia[questionNumber].incorrect[i];
+
+    //     if (answerNumber === 1) {
+    //     }
+    //     if (answerNumber === 2) { }
+    //     if (answerNumber === 3) { }
 
 
-//     }
 // }
+}
 
 
 
