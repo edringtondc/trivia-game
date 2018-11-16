@@ -163,13 +163,14 @@ window.onload = function () {
         $(".answers").empty();
 
         // Loops through the array of movies
+
+        shuffle(trivia[questionNumber].answers);
+        console.log(trivia[questionNumber].answers)
+        
         
         for (var i = 0; i < trivia[questionNumber].answers.length; i++) {
+          
             
-            var array = [0, 1, 2, 3];
-            var randNum = Math.floor(Math.random()*trivia[questionNumber].answers.length);
-            var number = randNum;
-
         
             // Then dynamicaly generates buttons for each movie in the array
             // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
@@ -177,21 +178,44 @@ window.onload = function () {
             // Adds a class of movie to our button
             a.addClass("answer");
             // Added a data-attribute
-            a.attr("data-name", trivia[questionNumber].answers[randNum]);
+            a.attr("data-name", trivia[questionNumber].answers[i]);
             // Provided the initial button text
-            a.text(trivia[questionNumber].answers[randNum]);
+            a.text(trivia[questionNumber].answers[i]);
             // Added the button to the buttons-view div
             $(".answers").append(a);
 
-            console.log("number is" + number);
+          
           
 
-            
-
+        
         }
-        trivia[questionNumber].answers.splice(number);
+      
     }
 }
+
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+  
+  // Used like so
+//   var arr = [2, 11, 37, 42];
+//   arr = shuffle(arr);
+//   console.log(arr);
 
         //randomize the number
         //+ with the #choice + 
