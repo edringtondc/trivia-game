@@ -11,40 +11,41 @@ var trivia = [
 
     {
         question: "What is the name of Jon Snow’s direwolf?",
-        correct: "Ghost",
-        incorrect: [
+        answers: [
+            "Ghost",
             "Lady",
             "ShaggyDog",
             "Nymeria"]
     },
     {
         question: 'Who said “That’s what I do, I drink and I know things."?',
-        correct: "Tyrion Lannister",
-        incorrect: [
+        answers: [
+
+            "Tyrion Lannister",
             "Aria Stark",
             "Robert Baratheon",
             "Jon Snow"]
     },
     {
         question: "Who is the King of Westeros when the series begins?",
-        correct: "Robert Baratheon",
-        incorrect: [
+        answers: [
+            "Robert Baratheon",
             "Ned Stark",
             "Rob Stark",
             "Jaime Lannister"]
     },
     {
         question: "What are the words of the House of Stark",
-        correct: "Winter is coming",
-        incorrect: [
+        answers: [
+            "Winter is coming",
             "First in Battle",
             "Growing Strong",
             "Ours is the Fury"]
     },
     {
         question: "Who is the eldest stark child?",
-        correct: "Robb Stark",
-        incorrect: [
+        answers:[
+            "Robb Stark",
             "Jon Snow",
             "Sanza Stark",
             "Bran Stark"]
@@ -76,7 +77,7 @@ window.onload = function () {
             //call the function to reset the game to the first question
             //displays new question
             $("#question").text(trivia[questionNumber].question);
-            
+
             // start();
         }
 
@@ -88,7 +89,7 @@ window.onload = function () {
         intervalId = setInterval(decrement, 1000);
         //displays question
 
-        displayChoices();
+        renderButtons();
         //60 second timer
         //starts when the start button is pushed, or user answers a new question
         //loop to randomly go through the array, and choose that object.
@@ -119,8 +120,8 @@ window.onload = function () {
 
         //right answer appears
 
-        
-     
+
+
 
 
         //increase wrong answers
@@ -155,46 +156,65 @@ window.onload = function () {
 
         //show restart button
     }
-    function displayChoices() { // will be called when the question is started
-   
-        $("#choice1").text(trivia[questionNumber].correct)
-        $("#choice1").data("correct");
-        $("#choice2").text(trivia[questionNumber].incorrect[0]);
-        $("#choice3").text(trivia[questionNumber].incorrect[1]);
-        $("#choice4").text(trivia[questionNumber].incorrect[2]);
-        console.log("display choices called");
+    function renderButtons() {
 
-        function test() {
-            var r=$('<input/>').attr({
-                type: "button",
-                id: "field",
-                value: 'new'
-            });
-            $("body").append(r);    
+        // Deletes the movies prior to adding new movies
+        // (this is necessary otherwise you will have repeat buttons)
+        $(".answers").empty();
+
+        // Loops through the array of movies
+        
+        for (var i = 0; i < trivia[questionNumber].answers.length; i++) {
+            
+            var array = [0, 1, 2, 3];
+            var randNum = Math.floor(Math.random()*trivia[questionNumber].answers.length);
+            var number = randNum;
+
+        
+            // Then dynamicaly generates buttons for each movie in the array
+            // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+            var a = $("<button>");
+            // Adds a class of movie to our button
+            a.addClass("answer");
+            // Added a data-attribute
+            a.attr("data-name", trivia[questionNumber].answers[randNum]);
+            // Provided the initial button text
+            a.text(trivia[questionNumber].answers[randNum]);
+            // Added the button to the buttons-view div
+            $(".answers").append(a);
+
+            console.log("number is" + number);
+          
+
+            
+
         }
-       
+        trivia[questionNumber].answers.splice(number);
+    }
+}
+
         //randomize the number
         //+ with the #choice + 
         //`#choice${rndnum}` // "#choice"+rn
         //loop 1-4 
         //check != rndnum
         // var choiceArray = [1, 2, 3, 4];
-    
-             
-       
-    
+
+
+
+
         // for (var i = 0; i < choiceArray.length; i++) {
         //     var rndnum = [Math.floor(Math.random() * choiceArray.length)];
-            
+
         //         $(`#choice${rndnum}`).text(trivia[questionNumber].correct);
         //         $(`#choice${rndnum}`).text(trivia[questionNumber].incorrect[0]);
         //         $(`#choice${rndnum}`).text(trivia[questionNumber].incorrect[1]);
         //         $(`#choice${rndnum}`).text(trivia[questionNumber].incorrect[2]);
-            
+
         //         //needs to put a random number in correct, and then do it for incorrects as well, so some sort of if statement to do the rest
         // }
-        
-    
+
+
 //append this for each answer
 
 //assign divs numbers 1-4,
@@ -207,35 +227,32 @@ window.onload = function () {
 // get index
 // input on page
 // slice it out
-    }
-
-};
 
 
 
 
-function checkAnswer() {
+// function checkAnswer() {
 
-    var answer = $('.answers input:radio:checked');
+//     var answer = $('.answers input:radio:checked');
 
-    if (answer.attr("class") === "correct") {
-        console.log("correct");
+//     if (answer.attr("class") === "correct") {
+//         console.log("correct");
 
-    } else {
-        console.log("wrong")
-    }
-}
+//     } else {
+//         console.log("wrong")
+//     }
+// }
 
 
-$(".answers").on("click", function() {
-    
+// $(".answers").on("click", function() {
 
-//code to do with questions
-checkAnswer();
 
-// var userChoice = function 
+// //code to do with questions
+// checkAnswer();
 
-});
+// // var userChoice = function 
+
+// });
 
 // //if user input = correct 
 // if (userChoice === trivia[questionNumber].correct) {
