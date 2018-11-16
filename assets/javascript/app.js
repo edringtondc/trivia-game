@@ -176,7 +176,7 @@ window.onload = function () {
             // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
             var a = $("<button>");
             // Adds a class of movie to our button
-            a.addClass("answer");
+            a.addClass("choice");
             // Added a data-attribute
             a.attr("data-name", trivia[questionNumber].answers[i]);
             // Provided the initial button text
@@ -212,86 +212,36 @@ function shuffle(array) {
     return array;
   }
   
-  // Used like so
-//   var arr = [2, 11, 37, 42];
-//   arr = shuffle(arr);
-//   console.log(arr);
-
-        //randomize the number
-        //+ with the #choice + 
-        //`#choice${rndnum}` // "#choice"+rn
-        //loop 1-4 
-        //check != rndnum
-        // var choiceArray = [1, 2, 3, 4];
 
 
 
 
-        // for (var i = 0; i < choiceArray.length; i++) {
-        //     var rndnum = [Math.floor(Math.random() * choiceArray.length)];
-
-        //         $(`#choice${rndnum}`).text(trivia[questionNumber].correct);
-        //         $(`#choice${rndnum}`).text(trivia[questionNumber].incorrect[0]);
-        //         $(`#choice${rndnum}`).text(trivia[questionNumber].incorrect[1]);
-        //         $(`#choice${rndnum}`).text(trivia[questionNumber].incorrect[2]);
-
-        //         //needs to put a random number in correct, and then do it for incorrects as well, so some sort of if statement to do the rest
-        // }
-
-
-//append this for each answer
-
-//assign divs numbers 1-4,
-//store answers in a variable with a random number
-//assign answer to div with that random number
-
-
-
-// find random
-// get index
-// input on page
-// slice it out
 
 
 
 
-// function checkAnswer() {
+function checkAnswer() {
+    event.preventDefault();
+    clearInterval(intervalId);
+    console.log(this);
+    
+    var answer = $(this).attr("data-name");
+  
 
-//     var answer = $('.answers input:radio:checked');
+    if (answer === trivia[questionNumber].answers[0]) {
+        console.log("correct");
+        correctAnswers++;
 
-//     if (answer.attr("class") === "correct") {
-//         console.log("correct");
-
-//     } else {
-//         console.log("wrong")
-//     }
-// }
-
-
-// $(".answers").on("click", function() {
+    } else {
+        console.log("wrong")
+        wrongAnswer();
+    }
+}
 
 
-// //code to do with questions
-// checkAnswer();
 
-// // var userChoice = function 
 
-// });
-
-// //if user input = correct 
-// if (userChoice === trivia[questionNumber].correct) {
-//     //- correct answers increases
-//     correctAnswers++;
-//     displayRightAnswer();
-
-//     //picture pops up and says correct
-
-// }
-// else {
-//     //if user input = incorrect 
-//     wrongAnswers();
-
-// }
+$(".answers").on("click", ".choice", checkAnswer);
 
 
 
