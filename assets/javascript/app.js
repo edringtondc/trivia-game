@@ -4,6 +4,9 @@ var correctAnswers = 0;
 var incorrect = 0;
 var intervalId;
 var questionNumber = 0;
+
+
+
 var trivia = [
 
     {
@@ -73,6 +76,7 @@ window.onload = function () {
             //call the function to reset the game to the first question
             //displays new question
             $("#question").text(trivia[questionNumber].question);
+            
             // start();
         }
 
@@ -112,7 +116,12 @@ window.onload = function () {
 
         //clearing questions
         $("#question").empty();
+
         //right answer appears
+
+        
+     
+
 
         //increase wrong answers
         incorrect++;
@@ -146,54 +155,87 @@ window.onload = function () {
 
         //show restart button
     }
+    function displayChoices() { // will be called when the question is started
+   
+        $("#choice1").text(trivia[questionNumber].correct)
+        $("#choice1").data("correct");
+        $("#choice2").text(trivia[questionNumber].incorrect[0]);
+        $("#choice3").text(trivia[questionNumber].incorrect[1]);
+        $("#choice4").text(trivia[questionNumber].incorrect[2]);
+        console.log("display choices called");
 
-
-};
-
+        function test() {
+            var r=$('<input/>').attr({
+                type: "button",
+                id: "field",
+                value: 'new'
+            });
+            $("body").append(r);    
+        }
+       
+        //randomize the number
+        //+ with the #choice + 
+        //`#choice${rndnum}` // "#choice"+rn
+        //loop 1-4 
+        //check != rndnum
+        // var choiceArray = [1, 2, 3, 4];
+    
+             
+       
+    
+        // for (var i = 0; i < choiceArray.length; i++) {
+        //     var rndnum = [Math.floor(Math.random() * choiceArray.length)];
+            
+        //         $(`#choice${rndnum}`).text(trivia[questionNumber].correct);
+        //         $(`#choice${rndnum}`).text(trivia[questionNumber].incorrect[0]);
+        //         $(`#choice${rndnum}`).text(trivia[questionNumber].incorrect[1]);
+        //         $(`#choice${rndnum}`).text(trivia[questionNumber].incorrect[2]);
+            
+        //         //needs to put a random number in correct, and then do it for incorrects as well, so some sort of if statement to do the rest
+        // }
+        
+    
 //append this for each answer
 
 //assign divs numbers 1-4,
 //store answers in a variable with a random number
 //assign answer to div with that random number
 
-function displayChoices() { // will be called when the question is started
-
-    console.log("display choices called");
-    $("#choice1").text(trivia[questionNumber].correct);
-    $("#choice2").text(trivia[questionNumber].incorrect[0]);
-    $("#choice3").text(trivia[questionNumber].incorrect[1]);
-    $("#choice4").text(trivia[questionNumber].incorrect[2]);
 
 
+// find random
+// get index
+// input on page
+// slice it out
+    }
 
-    //assign correct answer to a random number between 1-4
-    // var correctHolder = Math.floor(Math.random() * 4);
-    // return correctHolder;
-
-    // //assign incorrect answers to remaining numbers that aren't the correct answer
-    // for (var i = 0; i < trivia[questionNumber].incorrect.length; i++) {
-    //     var answerNumber = Math.floor(Math.random() * 4);
-    //     return trivia[questionNumber].incorrect[i];
-
-    //     if (answerNumber === 1) {
-    //     }
-    //     if (answerNumber === 2) { }
-    //     if (answerNumber === 3) { }
+};
 
 
-// }
+
+
+function checkAnswer() {
+
+    var answer = $('.answers input:radio:checked');
+
+    if (answer.attr("class") === "correct") {
+        console.log("correct");
+
+    } else {
+        console.log("wrong")
+    }
 }
 
 
-
-
-
-
-
+$(".answers").on("click", function() {
+    
 
 //code to do with questions
+checkAnswer();
 
 // var userChoice = function 
+
+});
 
 // //if user input = correct 
 // if (userChoice === trivia[questionNumber].correct) {

@@ -25,3 +25,19 @@ clearInterval - before you re-run a setInterval
 setTimeout - 
 
 function timer - 
+
+ for (var i = 0; i < movies.length; i++) {
+
+          // Then dynamicaly generating buttons for each movie in the array
+          // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+          var a = $("<button>");
+          // Adding a class
+          a.addClass("movie");
+          // Added a data-attribute
+          a.attr("data-name", movies[i]);
+          // Provided the initial button text
+          a.text(movies[i]);
+          // Added the button to the HTML
+          $("#buttons-view").append(a);
+        }
+      }
