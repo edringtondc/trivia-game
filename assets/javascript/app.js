@@ -70,6 +70,7 @@ var trivia = [
 
 //button to start the game
 window.onload = function () {
+    
     $("#start").click(nextQuestion);
 
     function nextQuestion() {
@@ -89,6 +90,7 @@ window.onload = function () {
         } else {
             //out of questions, game over
             endGame();
+            $("#startRow").show();
         }
 
     }
@@ -100,13 +102,11 @@ window.onload = function () {
 
         //removes previous picture
         $("#picDiv").empty();
+        $("#outOfTime").empty();
       
         //displays new buttons for next question
         renderButtons();
-
-        //updates the score
-        score();
-       
+        $("#startRow").hide();
     }
     //displays countdown
     function decrement() {
@@ -116,6 +116,7 @@ window.onload = function () {
 
         if (count === 0) {
             //if user runs out of time, it counts as a wrong answer. Count for time is reset
+            $(".timer").append("<h4 id='outOfTime'>You ran out of time!</h4>")
             wrongAnswer();
             count = 5;
         }
@@ -125,18 +126,13 @@ window.onload = function () {
     function wrongAnswer() {
         //clears interval
         clearInterval(intervalId);
-
         //clearing questions and choices
         $("#question").empty();
         $(".buttonsDiv").empty();
-
         //increase wrong answers
         incorrect++;
-
         //show correct answer
-
         displayRightAnswer();
-
         //next question appears after 5 seconds
         setTimeout(nextQuestion, 1000 * 5);
     }
@@ -159,6 +155,8 @@ window.onload = function () {
 
     }
 
+   
+
     //ends the game play
     function endGame() {
         clearInterval(intervalId);
@@ -166,13 +164,10 @@ window.onload = function () {
         $("#gameWrapper").empty();
         console.log("end game called");
         score();
-        alert("you got " + correctAnswers +" correct!");
-
-        //show winner box
-
-
-
-        //show restart button
+        questionNumber = 0;
+        $("#timer").empty();
+        
+    
     }
     function renderButtons() {
         // Deletes the buttons prior to adding new answers
@@ -195,9 +190,8 @@ window.onload = function () {
                 a.text(trivia[questionNumber].answers[i]);
                 // Added the button to the answers div
                 $(".buttonsDiv").append(a);
-
-
             }
+
         } else {
             //if no more questions, end the game
             endGame();
@@ -249,7 +243,10 @@ window.onload = function () {
 
     //writes score to the box
     function score() {
-
+        $("#startRow").show();
+        $(".scoreBox").append("<h3>Correct Answers: <span id='correct'></span></h3>")
+        $(".scoreBox").append("<h3>Incorrect Answers: <span id='incorrect'></span></h3>")
+        
         $("#correct").text(correctAnswers);
         $("#incorrect").text(incorrect);
     }
