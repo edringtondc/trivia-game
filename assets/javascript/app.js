@@ -75,22 +75,20 @@ window.onload = function () {
     function nextQuestion() {
         start();
 
-        // $("answer1").text(trivia[questionNumber].answer1);
-
         //removes the previously correct answer
         $("#correctAnswer").empty();
 
 
         console.log(questionNumber);
-        if (questionNumber > trivia.length) {
-            endGame();
-
-        } else {
-            //call the function to reset the game to the first question
+        // if 
+        if (questionNumber <= trivia.length) {
+              //call the function to reset the game to the first question
             //displays new question
             $("#question").text(trivia[questionNumber].question);
 
-            // start();
+        } else {
+            //out of questions, game over
+            endGame();
         }
 
     }
@@ -99,115 +97,113 @@ window.onload = function () {
         console.log("start called")
         clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
-        
-        //displays question
-        $("#picDiv").empty();
-        renderButtons();
-        score();
-        //60 second timer
-        //starts when the start button is pushed, or user answers a new question
-        //loop to randomly go through the array, and choose that object.
-    }
 
+        //removes previous picture
+        $("#picDiv").empty();
+
+        //displays new buttons for next question
+        renderButtons();
+
+        //updates the score
+        score();
+       
+    }
+    //displays countdown
     function decrement() {
         count--;
         $("#timer").text(count);
         console.log("decrement called");
 
         if (count === 0) {
-            console.log("time = 0")
+            //if user runs out of time, it counts as a wrong answer. Count for time is reset
             wrongAnswer();
-
             count = 5;
         }
 
     }
 
     function wrongAnswer() {
+        console.log("in wrongAnswer function");
         //clears interval
         clearInterval(intervalId);
 
-        //clearing questions
+        //clearing questions and choices
         $("#question").empty();
-
-        //right answer appears
+        $(".answers").empty();
 
         //increase wrong answers
         incorrect++;
-        //restart the timer
-        console.log("in wrongAnswer function")
+
+        //show correct answer
         displayRightAnswer();
 
-        //next question appears
-
+        //next question appears after 5 seconds
         setTimeout(nextQuestion, 1000 * 5);
-        console.log("wrong answer time out called");
-
-
     }
+
+    //Function to display correct answer
     function displayRightAnswer() {
         //empty the div
         $("#correctAnswer").empty();
         //display correct answer
-       
-        
+
+        //delete the buttons
+        $(".answers").empty();
+
+        //displays correct answer with image
         $("#correctAnswer").text("The right answer is " + trivia[questionNumber].correct + "!");
         $("#picDiv").append("<img src='" + trivia[questionNumber].image + "' />");
-        console.log("right answer displayed" + trivia[questionNumber].correct);
+        
+        //increases questionNumber to move to next array
         questionNumber++;
 
     }
 
+    //ends the game play
     function endGame() {
         clearInterval(intervalId);
         //display wrong answers
         $("#gameWrapper").empty();
         console.log("end game called");
         score();
-
-        
-
+        alert("you got " + correctAnswers +" correct!");
 
         //show winner box
 
-        //display right answers
+
 
         //show restart button
     }
     function renderButtons() {
-
         // Deletes the buttons prior to adding new answers
-
         $(".answers").empty();
 
-        // Loops through the array of movies
+        if (questionNumber < trivia.length) {
+            //shuffles the array of answers
+            shuffle(trivia[questionNumber].answers);
+            console.log(trivia[questionNumber].answers)
 
-        shuffle(trivia[questionNumber].answers);
-        console.log(trivia[questionNumber].answers)
+            //creates new buttons, with choices randomized
+            for (var i = 0; i < trivia[questionNumber].answers.length; i++) {
 
-
-        for (var i = 0; i < trivia[questionNumber].answers.length; i++) {
-
-
-
-            // Then dynamicaly generates buttons for each movie in the array
-            // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
-            var a = $("<button>");
-            // Adds a class of movie to our button
-            a.addClass("choice");
-            // Added a data-attribute
-            a.attr("data-name", trivia[questionNumber].answers[i]);
-            // Provided the initial button text
-            a.text(trivia[questionNumber].answers[i]);
-            // Added the button to the buttons-view div
-            $(".answers").append(a);
+                var a = $("<button>");
+               
+                a.addClass("choice");
+                // Added a data-attribute to identify answer
+                a.attr("data-name", trivia[questionNumber].answers[i]);
+                // Provided the initial button text
+                a.text(trivia[questionNumber].answers[i]);
+                // Added the button to the answers div
+                $(".answers").append(a);
 
 
+            }
+        } else {
+            //if no more questions, end the game
+            endGame();
         }
-
     }
-
-
+    //Function to shuffle answer array
     function shuffle(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -227,13 +223,9 @@ window.onload = function () {
         return array;
     }
 
-
-
     function checkAnswer() {
         event.preventDefault();
         clearInterval(intervalId);
-
-
 
         var answer = $(this).attr("data-name");
         console.log("answer: " + answer);
@@ -243,26 +235,18 @@ window.onload = function () {
             correctAnswers++;
             displayRightAnswer();
             setTimeout(nextQuestion, 1000 * 5);
-            
-
 
         } else {
             console.log("wrong")
             wrongAnswer();
-            
-            
         }
-
-
-
-
-
-
-
     }
+
+    //WATCHES for a click in the answer div, calls back checkAnswer
     $(".answers").on("click", ".choice", checkAnswer);
 
-    function score(){
+    //writes score to the box
+    function score() {
 
         $("#correct").text(correctAnswers);
         $("#incorrect").text(incorrect);
