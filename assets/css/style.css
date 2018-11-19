@@ -10,16 +10,24 @@ h1 {
     color: paleturquoise;
 }
 
-#correctAnswer {
-    color: blue;
+.scoreBox {
+    color: black;
     
     
+}
+#startRow {
+    text-align: center;
 }
 
 #correctAnswer img {
     width: 200px;
     height: 200px;
+    color: blue;
 
+}
+
+#gameWrapper {
+    text-align: center;
 }
 
 /* .buttonDiv {
@@ -28,8 +36,12 @@ h1 {
 
 .choice {
     color: powderblue;
-    padding: 2px;
+    padding: 5px;
+    margin: 10px;
     background-color: black;
-    
+}
 
+
+.card { 
+    background-color: rgba(245, 245, 245, 0.4);
 }

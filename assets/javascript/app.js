@@ -100,7 +100,7 @@ window.onload = function () {
 
         //removes previous picture
         $("#picDiv").empty();
-
+      
         //displays new buttons for next question
         renderButtons();
 
@@ -123,18 +123,18 @@ window.onload = function () {
     }
 
     function wrongAnswer() {
-        console.log("in wrongAnswer function");
         //clears interval
         clearInterval(intervalId);
 
         //clearing questions and choices
         $("#question").empty();
-        $(".answers").empty();
+        $(".buttonsDiv").empty();
 
         //increase wrong answers
         incorrect++;
 
         //show correct answer
+
         displayRightAnswer();
 
         //next question appears after 5 seconds
@@ -148,10 +148,10 @@ window.onload = function () {
         //display correct answer
 
         //delete the buttons
-        $(".answers").empty();
-
+        $(".buttonsDiv").empty();
+       
         //displays correct answer with image
-        $("#correctAnswer").text("The right answer is " + trivia[questionNumber].correct + "!");
+        $("#correctAnswer").text("The answer is: " + trivia[questionNumber].correct + "!");
         $("#picDiv").append("<img src='" + trivia[questionNumber].image + "' />");
         
         //increases questionNumber to move to next array
@@ -176,7 +176,7 @@ window.onload = function () {
     }
     function renderButtons() {
         // Deletes the buttons prior to adding new answers
-        $(".answers").empty();
+        $(".buttonsDiv").empty();
 
         if (questionNumber < trivia.length) {
             //shuffles the array of answers
@@ -186,7 +186,7 @@ window.onload = function () {
             //creates new buttons, with choices randomized
             for (var i = 0; i < trivia[questionNumber].answers.length; i++) {
 
-                var a = $("<button>");
+                var a = $("<button class='btn'>");
                
                 a.addClass("choice");
                 // Added a data-attribute to identify answer
@@ -194,7 +194,7 @@ window.onload = function () {
                 // Provided the initial button text
                 a.text(trivia[questionNumber].answers[i]);
                 // Added the button to the answers div
-                $(".answers").append(a);
+                $(".buttonsDiv").append(a);
 
 
             }
@@ -230,20 +230,22 @@ window.onload = function () {
         var answer = $(this).attr("data-name");
         console.log("answer: " + answer);
 
-        if (answer === trivia[questionNumber].correct) {
+        if  ((answer === trivia[questionNumber].correct) && (questionNumber <= trivia.length)) {
             console.log("correct");
+            $("#picDiv").append("<h3 id='userCorrect'> You are correct! </h3>");
             correctAnswers++;
             displayRightAnswer();
             setTimeout(nextQuestion, 1000 * 5);
 
-        } else {
-            console.log("wrong")
+        } else if(answer !== trivia[questionNumber].correct) {
+            console.log("wrong");
+            $("#picDiv").append("<h3 id='userWrong'> You are wrong! </h3>");
             wrongAnswer();
         }
     }
 
     //WATCHES for a click in the answer div, calls back checkAnswer
-    $(".answers").on("click", ".choice", checkAnswer);
+    $(".buttonsDiv").on("click", ".choice", checkAnswer);
 
     //writes score to the box
     function score() {

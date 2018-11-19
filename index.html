@@ -15,28 +15,43 @@
 
 <body>
 
-
-    <div class="container">
+    <header>
         <div class="row">
             <div class="col-lg-12 heading">
                 <h1>Trivia Game</h1>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-6 timer">
-                <h4>You have <span id="timer">0</span> seconds left</h4>
-                
-            </div>
-            <div class="scoreBox">
-                <h3>Correct Answers: <span id="correct"></span></h3>
-                <h3>Incorrect Answers: <span id="incorrect"></span></h3>
+    </header>
 
-            </div>
 
+
+
+    <div class="container d-flex flex-column card ">
+        <div class="row d-flex justify-content-around">
+            <div class="" id="startRow">
+                    <button type="button" class="btn btn-light" id="start">Start Game</button>
+            </div>
         </div>
+       
+        <div class="row d-flex justify-content-between">
+            <div class="col-lg-4 timer">
+                <h4>You have <span id='timer'>0</span> seconds left</h4>
 
-        <div id="gameWrapper">
+            </div>
+
+           
+
+                <div class="scoreBox col-lg-4 pl-5">
+                        <h3>Correct Answers: <span id="correct"></span></h3>
+                        <h3>Incorrect Answers: <span id="incorrect"></span></h3>
+        
+                </div>
+        </div>
+       
+
+
+        <div id="gameWrapper" class="container">
 
             <div class="row">
                 <div class="col-lg-12">
@@ -45,26 +60,23 @@
                     <h2 id="correctAnswer" class="flex-column"></h2>
 
 
-                    <div class="row buttonDiv">
-                        <div class="col-lg-12 answers">
 
-                        </div>
-                        <div id="picDiv"></div>
-
-
-
-                    </div>
                 </div>
-                <button type="button" class="btn btn-light" id="start">Start Game</button>
             </div>
+            <div class="row flex-column">
+                <div class="buttonsDiv">
+                   
+                   
+                </div>
+
+                <div id="picDiv" class="align-self-center">
+
+                </div>
+
+            </div>
+
         </div>
-
     </div>
-
-
-    </div>
-
-
 
 
     <!-- Optional JavaScript -->
