@@ -24,8 +24,14 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-12 timer">
+            <div class="col-lg-6 timer">
                 <h4>You have <span id="timer">0</span> seconds left</h4>
+                
+            </div>
+            <div class="scoreBox">
+                <h3>Correct Answers: <span id="correct"></span></h3>
+                <h3>Incorrect Answers: <span id="incorrect"></span></h3>
+
             </div>
 
         </div>
@@ -36,13 +42,14 @@
                 <div class="col-lg-12">
                     <h4 id="question">Asks a Question</h4>
 
-                    <h2 id="correctAnswer"></h2>
+                    <h2 id="correctAnswer" class="flex-column"></h2>
 
 
-                    <div class="row">
+                    <div class="row buttonDiv">
                         <div class="col-lg-12 answers">
 
                         </div>
+                        <div id="picDiv"></div>
 
 
 

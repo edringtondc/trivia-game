@@ -4,6 +4,7 @@ var correctAnswers = 0;
 var incorrect = 0;
 var intervalId;
 var questionNumber = 0;
+var count = 5
 
 
 
@@ -15,7 +16,10 @@ var trivia = [
             "Ghost",
             "Lady",
             "ShaggyDog",
-            "Nymeria"]
+            "Nymeria"],
+        correct: "Ghost",
+        image: "assets/images/Ghost.jpg"
+
     },
     {
         question: 'Who said “That’s what I do, I drink and I know things."?',
@@ -24,7 +28,9 @@ var trivia = [
             "Tyrion Lannister",
             "Aria Stark",
             "Robert Baratheon",
-            "Jon Snow"]
+            "Jon Snow"],
+        correct: "Tyrion Lannister",
+        image: "assets/images/Tyrion.jpg"
     },
     {
         question: "Who is the King of Westeros when the series begins?",
@@ -32,7 +38,9 @@ var trivia = [
             "Robert Baratheon",
             "Ned Stark",
             "Rob Stark",
-            "Jaime Lannister"]
+            "Jaime Lannister"],
+        correct: "Robert Baratheon",
+        image: "assets/images/robert.jpg"
     },
     {
         question: "What are the words of the House of Stark",
@@ -40,22 +48,26 @@ var trivia = [
             "Winter is coming",
             "First in Battle",
             "Growing Strong",
-            "Ours is the Fury"]
+            "Ours is the Fury"],
+        correct: "Winter is coming",
+        image: "assets/images/winter.gif"
     },
     {
         question: "Who is the eldest stark child?",
-        answers:[
+        answers: [
             "Robb Stark",
             "Jon Snow",
             "Sanza Stark",
-            "Bran Stark"]
+            "Bran Stark"],
+        correct: "Robb Stark",
+        image: "assets/images/rob.jpg"
     }
 
 ]
 
 //code dealing with time
 
-var count = 3
+
 //button to start the game
 window.onload = function () {
     $("#start").click(nextQuestion);
@@ -70,7 +82,7 @@ window.onload = function () {
 
 
         console.log(questionNumber);
-        if (questionNumber > 4) {
+        if (questionNumber > trivia.length) {
             endGame();
 
         } else {
@@ -87,9 +99,11 @@ window.onload = function () {
         console.log("start called")
         clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
+        
         //displays question
-
+        $("#picDiv").empty();
         renderButtons();
+        score();
         //60 second timer
         //starts when the start button is pushed, or user answers a new question
         //loop to randomly go through the array, and choose that object.
@@ -104,7 +118,7 @@ window.onload = function () {
             console.log("time = 0")
             wrongAnswer();
 
-            count = 3;
+            count = 5;
         }
 
     }
@@ -112,35 +126,36 @@ window.onload = function () {
     function wrongAnswer() {
         //clears interval
         clearInterval(intervalId);
-        console.log("wrongAnswer called");
-
 
         //clearing questions
         $("#question").empty();
 
         //right answer appears
 
-
-
-
-
         //increase wrong answers
         incorrect++;
         //restart the timer
         console.log("in wrongAnswer function")
         displayRightAnswer();
+
         //next question appears
 
-        setTimeout(nextQuestion, 1000 * 3);
+        setTimeout(nextQuestion, 1000 * 5);
+        console.log("wrong answer time out called");
 
-        function displayRightAnswer() {
-            //empty the div
-            //display correct answer
-            $("#correctAnswer").text("The right answer is " + trivia[questionNumber].correct + "!");
-            console.log("right answer displayed");
-            questionNumber++;
 
-        }
+    }
+    function displayRightAnswer() {
+        //empty the div
+        $("#correctAnswer").empty();
+        //display correct answer
+       
+        
+        $("#correctAnswer").text("The right answer is " + trivia[questionNumber].correct + "!");
+        $("#picDiv").append("<img src='" + trivia[questionNumber].image + "' />");
+        console.log("right answer displayed" + trivia[questionNumber].correct);
+        questionNumber++;
+
     }
 
     function endGame() {
@@ -148,6 +163,9 @@ window.onload = function () {
         //display wrong answers
         $("#gameWrapper").empty();
         console.log("end game called");
+        score();
+
+        
 
 
         //show winner box
@@ -158,20 +176,20 @@ window.onload = function () {
     }
     function renderButtons() {
 
-        // Deletes the movies prior to adding new movies
-        // (this is necessary otherwise you will have repeat buttons)
+        // Deletes the buttons prior to adding new answers
+
         $(".answers").empty();
 
         // Loops through the array of movies
 
         shuffle(trivia[questionNumber].answers);
         console.log(trivia[questionNumber].answers)
-        
-        
+
+
         for (var i = 0; i < trivia[questionNumber].answers.length; i++) {
-          
-            
-        
+
+
+
             // Then dynamicaly generates buttons for each movie in the array
             // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
             var a = $("<button>");
@@ -184,69 +202,74 @@ window.onload = function () {
             // Added the button to the buttons-view div
             $(".answers").append(a);
 
-          
-          
 
-        
         }
-      
+
     }
+
+
+    function shuffle(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    }
+
+
+
+    function checkAnswer() {
+        event.preventDefault();
+        clearInterval(intervalId);
+
+
+
+        var answer = $(this).attr("data-name");
+        console.log("answer: " + answer);
+
+        if (answer === trivia[questionNumber].correct) {
+            console.log("correct");
+            correctAnswers++;
+            displayRightAnswer();
+            setTimeout(nextQuestion, 1000 * 5);
+            
+
+
+        } else {
+            console.log("wrong")
+            wrongAnswer();
+            
+            
+        }
+
+
+
+
+
+
+
+    }
+    $(".answers").on("click", ".choice", checkAnswer);
+
+    function score(){
+
+        $("#correct").text(correctAnswers);
+        $("#incorrect").text(incorrect);
+    }
+
+
 }
-
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-  
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-  
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-  
-    return array;
-  }
-  
-
-
-
-
-
-
-
-
-function checkAnswer() {
-    event.preventDefault();
-    clearInterval(intervalId);
-    console.log(this);
-    
-    var answer = $(this).attr("data-name");
-  
-
-    if (answer === trivia[questionNumber].answers[0]) {
-        console.log("correct");
-        correctAnswers++;
-
-    } else {
-        console.log("wrong")
-        wrongAnswer();
-    }
-}
-
-
-
-
-$(".answers").on("click", ".choice", checkAnswer);
-
-
-
-
-
 
 
 

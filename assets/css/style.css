@@ -10,6 +10,26 @@ h1 {
     color: paleturquoise;
 }
 
-#question {
+#correctAnswer {
+    color: blue;
     
+    
+}
+
+#correctAnswer img {
+    width: 200px;
+    height: 200px;
+
+}
+
+/* .buttonDiv {
+
+} */
+
+.choice {
+    color: powderblue;
+    padding: 2px;
+    background-color: black;
+    
+
 }
