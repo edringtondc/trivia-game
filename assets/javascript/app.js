@@ -4,7 +4,7 @@ var correctAnswers = 0;
 var incorrect = 0;
 var intervalId;
 var questionNumber = 0;
-var count = 5
+var count = 15
 
 
 
@@ -79,6 +79,7 @@ window.onload = function () {
     }
 
     renderStart();
+
    
     $("#start").click(nextQuestion);
 
@@ -86,9 +87,10 @@ window.onload = function () {
         start();
 
         //removes the previously correct answer
-        $(".timer").html("<h4>You have <span id='timer'>0</span> seconds left</h4>");
+        $(".timer").html("<h4>You have <span id='timer'>15</span> seconds left</h4>");
         $("#outOfTime").empty();
         $("#correctAnswer").empty();
+       
 
 
         console.log(questionNumber);
@@ -131,9 +133,13 @@ window.onload = function () {
             //if user runs out of time, it counts as a wrong answer. Count for time is reset
             // $(".timer").html("<h4 id='outOfTime'>You ran out of time!</h4>")
             wrongAnswer();
-            count = 5;
+            
         }
     }
+    function stopTimer() {
+        clearInterval(decrement);
+        count =15;
+    };
 
     function wrongAnswer() {
         //clears interval
@@ -147,6 +153,7 @@ window.onload = function () {
         displayRightAnswer();
         //next question appears after 5 seconds
         setTimeout(nextQuestion, 1000 * 5);
+       
     }
 
     //Function to display correct answer
@@ -179,12 +186,6 @@ window.onload = function () {
         $("#timer").empty();
         correctAnswers = 0;
         incorrect = 0;
-
- 
-    
-
-
-
 
     }
     function renderButtons() {
@@ -239,6 +240,7 @@ window.onload = function () {
     function checkAnswer() {
         event.preventDefault();
         clearInterval(intervalId);
+        stopTimer();
 
         var answer = $(this).attr("data-name");
         console.log("answer: " + answer);
@@ -269,7 +271,6 @@ window.onload = function () {
         $("#correct").text(correctAnswers);
         $("#incorrect").text(incorrect);
     }
-
 
 }
 
