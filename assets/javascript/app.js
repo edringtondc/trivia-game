@@ -10,6 +10,7 @@ var count = 15
 
 
 
+
 var trivia = [
 
     {
@@ -85,8 +86,11 @@ window.onload = function () {
 
 
     function renderStart(){
+        questionNumber = 0;
         var startButton = $("<button type='button' class='btn btn-light' id='start'>Start Game</button>");
         $("#startRow").append(startButton);
+        $("#question").empty();
+       
     }
 
     renderStart();
@@ -95,21 +99,24 @@ window.onload = function () {
     $("#startRow").click(nextQuestion);
 
     function nextQuestion() {
-       
-        start();
+        console.log("next question called")
 
         //removes the previously correct answer
         $(".timer").html("<h4>You have <span id='timer'>15</span> seconds left</h4>");
         $("#outOfTime").empty();
         $("#correctAnswer").empty();
+        $("#picDiv").empty()
        
-
-
         console.log(questionNumber);
         // if 
-        if (questionNumber <= trivia.length) {
+        if (questionNumber === trivia.length){
+            endGame();
+        }
+        else if (questionNumber <= trivia.length) {
             //call the function to reset the game to the first question
+
             //displays new question
+            start();
             $("#question").text(trivia[questionNumber].question);
 
         } else {
@@ -130,8 +137,6 @@ window.onload = function () {
         //removes previous picture
         $("#startRow").empty();
         $("#picDiv").empty();
-        $("#startRow").empty();
-
         //displays new buttons for next question
         renderButtons();
 
@@ -192,14 +197,15 @@ window.onload = function () {
     function endGame() {
         clearInterval(intervalId);
         renderStart();
+        endGame = true;
 
 
 
         //display wrong answers
-        $("#gameWrapper").empty();
+        $("#picDiv", ".buttons", ".scoreBox", "#question").empty();
         console.log("end game called");
         score();
-        questionNumber = 0;
+        
         $("#timer").empty();
         correctAnswers = 0;
         incorrect = 0;
@@ -271,7 +277,6 @@ window.onload = function () {
 
         } else if (answer !== trivia[questionNumber].correct) {
             console.log("wrong");
-            
             wrongAnswer();
         }
     }
