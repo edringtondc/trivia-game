@@ -21,12 +21,10 @@ var trivia = [
             "Nymeria"],
         correct: "Ghost",
         image: "assets/images/Ghost.jpg"
-
     },
     {
         question: 'Who said “That’s what I do, I drink and I know things."?',
         answers: [
-
             "Tyrion Lannister",
             "Aria Stark",
             "Robert Baratheon",
@@ -63,7 +61,19 @@ var trivia = [
             "Bran Stark"],
         correct: "Robb Stark",
         image: "assets/images/rob.jpg"
+    },
+    {
+        question: "Which of the following is NOT one of Daenarys' Dragons?",
+        answers: [
+            "Drogon",
+            "Rhaegal",
+            "Viserion",
+            "Daarion"
+        ],
+        correct: "Daarion",
+        image: "assets/images/dragons.gif"
     }
+
 
 ]
 
@@ -71,7 +81,8 @@ var trivia = [
 
 
 //button to start the game
-window.onload = function () {
+window.onload = function () { 
+
 
     function renderStart(){
         var startButton = $("<button type='button' class='btn btn-light' id='start'>Start Game</button>");
@@ -81,9 +92,10 @@ window.onload = function () {
     renderStart();
 
    
-    $("#start").click(nextQuestion);
+    $("#startRow").click(nextQuestion);
 
     function nextQuestion() {
+       
         start();
 
         //removes the previously correct answer
@@ -110,6 +122,7 @@ window.onload = function () {
 
     //starts time
     function start() {
+        
         console.log("start called")
         clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
@@ -133,6 +146,7 @@ window.onload = function () {
             //if user runs out of time, it counts as a wrong answer. Count for time is reset
             // $(".timer").html("<h4 id='outOfTime'>You ran out of time!</h4>")
             wrongAnswer();
+            count = 15;
             
         }
     }
@@ -147,6 +161,7 @@ window.onload = function () {
         //clearing questions and choices
         $("#question").empty();
         $(".buttonsDiv").empty();
+        $("#picDiv").append("<h3 id='userWrong'> You are wrong! </h3>");
         //increase wrong answers
         incorrect++;
         //show correct answer
@@ -177,6 +192,8 @@ window.onload = function () {
     function endGame() {
         clearInterval(intervalId);
         renderStart();
+
+
 
         //display wrong answers
         $("#gameWrapper").empty();
@@ -254,7 +271,7 @@ window.onload = function () {
 
         } else if (answer !== trivia[questionNumber].correct) {
             console.log("wrong");
-            $("#picDiv").append("<h3 id='userWrong'> You are wrong! </h3>");
+            
             wrongAnswer();
         }
     }
@@ -271,8 +288,7 @@ window.onload = function () {
         $("#correct").text(correctAnswers);
         $("#incorrect").text(incorrect);
     }
-
+    
 }
-
 
 
