@@ -8,6 +8,8 @@ var count = 5
 
 
 
+
+
 var trivia = [
 
     {
@@ -70,30 +72,40 @@ var trivia = [
 
 //button to start the game
 window.onload = function () {
-    
+
+    function renderStart(){
+        var startButton = $("<button type='button' class='btn btn-light' id='start'>Start Game</button>");
+        $("#startRow").append(startButton);
+    }
+
+    renderStart();
+   
     $("#start").click(nextQuestion);
 
     function nextQuestion() {
         start();
 
         //removes the previously correct answer
+        $(".timer").html("<h4>You have <span id='timer'>0</span> seconds left</h4>");
+        $("#outOfTime").empty();
         $("#correctAnswer").empty();
 
 
         console.log(questionNumber);
         // if 
         if (questionNumber <= trivia.length) {
-              //call the function to reset the game to the first question
+            //call the function to reset the game to the first question
             //displays new question
             $("#question").text(trivia[questionNumber].question);
 
         } else {
             //out of questions, game over
             endGame();
-            $("#startRow").show();
+
         }
 
     }
+
     //starts time
     function start() {
         console.log("start called")
@@ -101,12 +113,13 @@ window.onload = function () {
         intervalId = setInterval(decrement, 1000);
 
         //removes previous picture
+        $("#startRow").empty();
         $("#picDiv").empty();
-        $("#outOfTime").empty();
-      
+        $("#startRow").empty();
+
         //displays new buttons for next question
         renderButtons();
-        $("#startRow").hide();
+
     }
     //displays countdown
     function decrement() {
@@ -116,11 +129,10 @@ window.onload = function () {
 
         if (count === 0) {
             //if user runs out of time, it counts as a wrong answer. Count for time is reset
-            $(".timer").append("<h4 id='outOfTime'>You ran out of time!</h4>")
+            // $(".timer").html("<h4 id='outOfTime'>You ran out of time!</h4>")
             wrongAnswer();
             count = 5;
         }
-
     }
 
     function wrongAnswer() {
@@ -145,33 +157,40 @@ window.onload = function () {
 
         //delete the buttons
         $(".buttonsDiv").empty();
-       
+
         //displays correct answer with image
         $("#correctAnswer").text("The answer is: " + trivia[questionNumber].correct + "!");
         $("#picDiv").append("<img src='" + trivia[questionNumber].image + "' />");
-        
+
         //increases questionNumber to move to next array
         questionNumber++;
 
     }
-
-   
-
     //ends the game play
     function endGame() {
         clearInterval(intervalId);
+        renderStart();
+
         //display wrong answers
         $("#gameWrapper").empty();
         console.log("end game called");
         score();
         questionNumber = 0;
         $("#timer").empty();
-        
+        correctAnswers = 0;
+        incorrect = 0;
+
+ 
     
+
+
+
+
     }
     function renderButtons() {
         // Deletes the buttons prior to adding new answers
         $(".buttonsDiv").empty();
+
 
         if (questionNumber < trivia.length) {
             //shuffles the array of answers
@@ -182,7 +201,7 @@ window.onload = function () {
             for (var i = 0; i < trivia[questionNumber].answers.length; i++) {
 
                 var a = $("<button class='btn'>");
-               
+
                 a.addClass("choice");
                 // Added a data-attribute to identify answer
                 a.attr("data-name", trivia[questionNumber].answers[i]);
@@ -224,14 +243,14 @@ window.onload = function () {
         var answer = $(this).attr("data-name");
         console.log("answer: " + answer);
 
-        if  ((answer === trivia[questionNumber].correct) && (questionNumber <= trivia.length)) {
+        if ((answer === trivia[questionNumber].correct) && (questionNumber <= trivia.length)) {
             console.log("correct");
             $("#picDiv").append("<h3 id='userCorrect'> You are correct! </h3>");
             correctAnswers++;
             displayRightAnswer();
             setTimeout(nextQuestion, 1000 * 5);
 
-        } else if(answer !== trivia[questionNumber].correct) {
+        } else if (answer !== trivia[questionNumber].correct) {
             console.log("wrong");
             $("#picDiv").append("<h3 id='userWrong'> You are wrong! </h3>");
             wrongAnswer();
@@ -246,7 +265,7 @@ window.onload = function () {
         $("#startRow").show();
         $(".scoreBox").append("<h3>Correct Answers: <span id='correct'></span></h3>")
         $(".scoreBox").append("<h3>Incorrect Answers: <span id='incorrect'></span></h3>")
-        
+
         $("#correct").text(correctAnswers);
         $("#incorrect").text(incorrect);
     }
