@@ -55,3 +55,12 @@ body {
 .card { 
     background-color: rgba(245, 245, 245, 0.4);
 }
+
+#timer{
+    color: darkred;
+    font-size: 45px;
+    
+}
+.timer, h4{
+    text-align: center;
+}

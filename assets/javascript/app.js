@@ -103,7 +103,7 @@ window.onload = function () {
         console.log("next question called")
 
         //removes the previously correct answer
-        $(".timer").html("<h4>You have <span id='timer'>15</span> seconds left</h4>");
+        $(".timer").html("<h4><span id='timer'> 15</span></h4>");
         $("#outOfTime").empty();
         $("#correctAnswer").empty();
         $("#picDiv").empty()
