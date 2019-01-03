@@ -1,28 +1,23 @@
-# trivia-game
+# Game of Thrones Trivia
 
-You'll create a trivia game that shows only one question until the player answers it or their time runs out.
-If the player selects the correct answer, show a screen congratulating them for choosing the right option. After a few seconds, display the next question -- do this without user input.
+This is a Game of Thrones trivia game that shows only one question until the player answers it or their time runs out.
+If the player selects the correct answer, a screen congratulating them for choosing the right option and a picture or gif show. After a few seconds, the next question is displayed.
 
-The scenario is similar for wrong answers and time-outs.
+If the player runs out of time, the player is told that time's up and the correct answer is displayed. After a few seconds,  they are shown the next question.
+
+If the player chooses the wrong answer they are told they selected the wrong option and the correct answer is displayed along with the pic or gif. 
+
+![Gif of Game Play](/assets/images/TriviaGame.gif)
+
+On the final screen, the number of correct answers, incorrect answers are shown, and an option to restart the game is presented.
+
+![End of Game](/assets/images/GameEnd.png)
 
 
-If the player runs out of time, tell the player that time's up and display the correct answer. Wait a few seconds, then show the next question.
-If the player chooses the wrong answer, tell the player they selected the wrong option and then display the correct answer. Wait a few seconds, then show the next question.
+Author: Elisabeth Edrington
 
+[Check out my portfolio](http://elisabethedrington.com)
 
-On the final screen, show the number of correct answers, incorrect answers, and an option to restart the game (without reloading the page).
+[Check out the repo](https://github.com/edringtondc/trivia-game/)
 
-
-start button 30 second timer
-click on answer - get a picture
-
-end of game you get number of correct and wrong
-start over button
-
-setInterval - is going to run a function at a repeated interval (every 5 seconds, 15 seconds etc)
-clearInterval - before you re-run a setInterval
-
-setTimeout - 
-
-function timer - 
 
