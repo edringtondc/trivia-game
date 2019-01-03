@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'GOTFont';
+    src: url("../assets/fonts/Game of Thrones.ttf")
+    format("truetype");
+}
 body {
     background-color: steelblue;
     background-image: url("../images/GOTBackground.jpg");
@@ -10,6 +15,7 @@ body {
     color: paleturquoise;
     border-bottom-width: 1px;;
     border-bottom-color: black;
+    font-family: "GOTFont", serif;
     
     
 }

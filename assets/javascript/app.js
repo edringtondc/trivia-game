@@ -90,6 +90,7 @@ window.onload = function () {
         var startButton = $("<button type='button' class='btn btn-light' id='start'>Start Game</button>");
         $("#startRow").append(startButton);
         $("#question").empty();
+        $(".scoreBox").empty();
        
     }
 
@@ -106,13 +107,14 @@ window.onload = function () {
         $("#outOfTime").empty();
         $("#correctAnswer").empty();
         $("#picDiv").empty()
+        $(".scoreBox").empty();
        
         console.log(questionNumber);
         // if 
         if (questionNumber === trivia.length){
             endGame();
         }
-        else if (questionNumber <= trivia.length) {
+        else if (questionNumber < trivia.length) {
             //call the function to reset the game to the first question
 
             //displays new question
@@ -172,7 +174,7 @@ window.onload = function () {
         //show correct answer
         displayRightAnswer();
         //next question appears after 5 seconds
-        setTimeout(nextQuestion, 1000 * 5);
+        setTimeout(nextQuestion, 1000 * 3);
        
     }
 
@@ -181,7 +183,7 @@ window.onload = function () {
         //empty the div
         $("#correctAnswer").empty();
         //display correct answer
-
+        $(".timer").empty();
         //delete the buttons
         $(".buttonsDiv").empty();
 
@@ -197,12 +199,13 @@ window.onload = function () {
     function endGame() {
         clearInterval(intervalId);
         renderStart();
-        endGame = true;
+       
+       
 
-
+        $(".timer").empty();
 
         //display wrong answers
-        $("#picDiv", ".buttons", ".scoreBox", "#question").empty();
+        $("#picDiv", ".buttons", "#question").empty();
         console.log("end game called");
         score();
         
@@ -286,7 +289,7 @@ window.onload = function () {
 
     //writes score to the box
     function score() {
-        $("#startRow").show();
+    
         $(".scoreBox").append("<h3>Correct Answers: <span id='correct'></span></h3>")
         $(".scoreBox").append("<h3>Incorrect Answers: <span id='incorrect'></span></h3>")
 
