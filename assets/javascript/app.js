@@ -1,16 +1,12 @@
 
-//global variables, including an array of questions
+//global variables
 var correctAnswers = 0;
 var incorrect = 0;
 var intervalId;
 var questionNumber = 0;
 var count = 15
 
-
-
-
-
-
+//array of question objects
 var trivia = [
 
     {
@@ -78,13 +74,10 @@ var trivia = [
 
 ]
 
-//code dealing with time
 
-
-//button to start the game
 window.onload = function () { 
 
-
+//function that renders the start button
     function renderStart(){
         questionNumber = 0;
         var startButton = $("<button type='button' class='btn btn-light' id='start'>Start Game</button>");
@@ -96,28 +89,30 @@ window.onload = function () {
 
     renderStart();
 
-   
+    //when clicked on start, nextQuestion is called starting the flow of questions
     $("#startRow").click(nextQuestion);
 
+    //nextQuestion function that erases the previous question or start button
     function nextQuestion() {
         console.log("next question called")
 
-        //removes the previously correct answer
+        //renders the timer
         $(".timer").html("<h4><span id='timer'> 15</span></h4>");
+        //removes the previously correct answer
         $("#outOfTime").empty();
         $("#correctAnswer").empty();
         $("#picDiv").empty()
         $(".scoreBox").empty();
        
         console.log(questionNumber);
-        // if 
+    
+        //if statement that determines if its the last question or not
         if (questionNumber === trivia.length){
+            //if its the last question, the endGame function is called
             endGame();
         }
         else if (questionNumber < trivia.length) {
-            //call the function to reset the game to the first question
-
-            //displays new question
+            //if there are more questions, calls the function displays new question
             start();
             $("#question").text(trivia[questionNumber].question);
 
@@ -129,7 +124,7 @@ window.onload = function () {
 
     }
 
-    //starts time
+    //starts timer
     function start() {
         
         console.log("start called")
@@ -162,6 +157,7 @@ window.onload = function () {
         count =15;
     };
 
+    //function called if the wrongAnswer is chosen
     function wrongAnswer() {
         //clears interval
         clearInterval(intervalId);
@@ -200,8 +196,6 @@ window.onload = function () {
         clearInterval(intervalId);
         renderStart();
        
-       
-
         $(".timer").empty();
 
         //display wrong answers
@@ -214,6 +208,7 @@ window.onload = function () {
         incorrect = 0;
 
     }
+    //renders answer buttons
     function renderButtons() {
         // Deletes the buttons prior to adding new answers
         $(".buttonsDiv").empty();
@@ -243,7 +238,8 @@ window.onload = function () {
             endGame();
         }
     }
-    //Function to shuffle answer array
+
+    //Function to shuffle answer array so buttons display in different order
     function shuffle(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -262,6 +258,8 @@ window.onload = function () {
 
         return array;
     }
+
+    //function that checks if the selected answer is equal to the correct answer stored in the object
 
     function checkAnswer() {
         event.preventDefault();
