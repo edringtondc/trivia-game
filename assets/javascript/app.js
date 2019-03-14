@@ -8,7 +8,6 @@ var count = 15
 
 //array of question objects
 var trivia = [
-
     {
         question: "What is the name of Jon Snow’s direwolf?",
         answers: [
@@ -70,10 +69,7 @@ var trivia = [
         correct: "Daarion",
         image: "assets/images/dragons.gif"
     }
-
-
 ]
-
 
 window.onload = function () { 
 
@@ -84,9 +80,8 @@ window.onload = function () {
         $("#startRow").append(startButton);
         $("#question").empty();
         $(".scoreBox").empty();
-       
     }
-
+    //calling renderStart
     renderStart();
 
     //when clicked on start, nextQuestion is called starting the flow of questions
@@ -110,34 +105,28 @@ window.onload = function () {
         if (questionNumber === trivia.length){
             //if its the last question, the endGame function is called
             endGame();
-        }
-        else if (questionNumber < trivia.length) {
+        } else if (questionNumber < trivia.length) {
             //if there are more questions, calls the function displays new question
             start();
             $("#question").text(trivia[questionNumber].question);
-
         } else {
             //out of questions, game over
             endGame();
-
         }
-
     }
 
     //starts timer
     function start() {
-        
         console.log("start called")
         clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
-
         //removes previous picture
         $("#startRow").empty();
         $("#picDiv").empty();
         //displays new buttons for next question
         renderButtons();
-
     }
+
     //displays countdown
     function decrement() {
         count--;
@@ -146,10 +135,8 @@ window.onload = function () {
 
         if (count === 0) {
             //if user runs out of time, it counts as a wrong answer. Count for time is reset
-            // $(".timer").html("<h4 id='outOfTime'>You ran out of time!</h4>")
             wrongAnswer();
             count = 15;
-            
         }
     }
     function stopTimer() {
@@ -171,7 +158,6 @@ window.onload = function () {
         displayRightAnswer();
         //next question appears after 5 seconds
         setTimeout(nextQuestion, 1000 * 3);
-       
     }
 
     //Function to display correct answer
@@ -182,20 +168,17 @@ window.onload = function () {
         $(".timer").empty();
         //delete the buttons
         $(".buttonsDiv").empty();
-
         //displays correct answer with image
         $("#correctAnswer").text("The answer is: " + trivia[questionNumber].correct + "!");
         $("#picDiv").append("<img src='" + trivia[questionNumber].image + "' />");
-
         //increases questionNumber to move to next array
         questionNumber++;
-
     }
+
     //ends the game play
     function endGame() {
         clearInterval(intervalId);
         renderStart();
-       
         $(".timer").empty();
 
         //display wrong answers
@@ -204,15 +187,15 @@ window.onload = function () {
         score();
         
         $("#timer").empty();
+        //reset answer counts to 0
         correctAnswers = 0;
         incorrect = 0;
-
     }
+
     //renders answer buttons
     function renderButtons() {
         // Deletes the buttons prior to adding new answers
         $(".buttonsDiv").empty();
-
 
         if (questionNumber < trivia.length) {
             //shuffles the array of answers
@@ -255,12 +238,10 @@ window.onload = function () {
             array[currentIndex] = array[randomIndex];
             array[randomIndex] = temporaryValue;
         }
-
         return array;
     }
 
     //function that checks if the selected answer is equal to the correct answer stored in the object
-
     function checkAnswer() {
         event.preventDefault();
         clearInterval(intervalId);
@@ -287,14 +268,12 @@ window.onload = function () {
 
     //writes score to the box
     function score() {
-    
         $(".scoreBox").append("<h3>Correct Answers: <span id='correct'></span></h3>")
         $(".scoreBox").append("<h3>Incorrect Answers: <span id='incorrect'></span></h3>")
 
         $("#correct").text(correctAnswers);
         $("#incorrect").text(incorrect);
     }
-    
 }
 
 
